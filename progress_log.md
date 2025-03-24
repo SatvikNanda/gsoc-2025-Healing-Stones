@@ -11,7 +11,44 @@
 
    ![image](https://github.com/user-attachments/assets/fe102630-94df-461a-aa8d-edf4d714c6d5)
 
-## Key learning:
+## Key Learning:
 1. 3D visualization using open3d.draw_geometries()
 2. Case sensitivity in file extensions can break visualization if not handled carefully
 3. GitHub doesn’t support large 3D files well, better to externalize with Drive
+
+# Day 2:
+## What I did today:
+1. compare_downsample.py:<br>
+   a. Created a script to visually compare original vs downsampled point clouds.<br>
+   b. Understood how voxel downsampling reduces the number of points while preserving the shape.<br>
+   c. Visualized the result in color-coded 3D (blue = original, red = downsampled).<br>
+   Result:<br>
+   Original point count: 11860704<br>
+   Downsampled point count: 880549<br>
+
+3. icp_align.py:<br>
+   a. Wrote a script to perform basic ICP alignment between two selected fragments using point-to-point ICP.<br>
+   b. How ICP computes transformation matrices.<br>
+   c. Visualizing results with aligned and target fragments.
+   ![image](https://github.com/user-attachments/assets/e0b57d12-cb1a-4f41-b1b4-5653eb90c45d)<br><br>
+
+
+5. icp_align2.py:<br>
+   a. Extended ICP logic to compare point-to-point vs point-to-plane ICP.<br>
+   b. Evaluated result using fitness and RMSE.<br>
+   c. Observed that point-to-plane gave slightly better fitness and more detailed surface matching.<br>
+   ![image](https://github.com/user-attachments/assets/7a39636c-e957-49a0-a001-3cf21e90352c)<br><br>
+
+
+7. pairwise_icp_log.py:<br>
+   a. Developed a script to automatically align multiple fragment pairs using point-to-plane ICP only.<br>
+   b. Selected the first 5 fragments, and compared all unique combinations (10 pairs total).<br>
+   c. Logged the results (Source, Target, Fitness, RMSE) into a CSV file: icp_results.csv<br>
+   d. Optimized loop to avoid self-pairs and reversed duplicates by comparing only i < j.<br>
+   ![image](https://github.com/user-attachments/assets/bf0a8e22-a65d-44a6-a14f-7f145a96a547)<br>
+
+## Key Learning:
+1. ICP performance varies significantly by fragment pair.
+2. Point-to-plane is better suited for cultural heritage fragments.
+3. Automating and logging results gives clear insight into matching quality.
+
