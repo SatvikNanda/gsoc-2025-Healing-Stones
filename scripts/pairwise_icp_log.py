@@ -19,25 +19,30 @@ def run_icp(source_down, target_down):
     )
     return result
 
-def get_filenames(folder_path, limit=5):
+def get_filenames(folder_path, limit=None):
     files = sorted([f for f in os.listdir(folder_path) if f.endswith(".PLY") or f.endswith(".ply")])
-    return files[:limit]  # use first N files
+    return files if limit is None else files[:limit]
 
 if __name__ == "__main__":
     data_path = "data/fragments"
-    fragment_files = get_filenames(data_path, limit=5)
+    fragment_files = get_filenames(data_path, limit=None)
     results = []
 
     print("Running ICP pairwise comparisons...\n")
+
+    pair_count = 0
+    total_pairs = len(fragment_files) * (len(fragment_files) - 1) // 2
 
     for i in range(len(fragment_files)):
         for j in range(i + 1, len(fragment_files)):  # ensures j > i
             if i == j:
                 continue  # skip self-pair
+            pair_count += 1
 
             source_file = fragment_files[i]
             target_file = fragment_files[j]
 
+            print(f"Current pair count is {pair_count} out of total count {total_pairs}")
             print(f"Aligning {source_file} → {target_file}")
 
             source_raw, source_down = load_and_preprocess_pcd(os.path.join(data_path, source_file))
