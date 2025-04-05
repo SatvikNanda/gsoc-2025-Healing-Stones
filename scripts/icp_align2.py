@@ -32,10 +32,7 @@ def run_icp(source_down, target_down, source_raw, target_raw, method="point_to_p
     print(f"Fitness: {result.fitness:.4f}")
     print(f"RMSE: {result.inlier_rmse:.4f}")
 
-    transformed_source = copy.deepcopy(source_raw)
-    transformed_source.transform(result.transformation)
-
-    return transformed_source, target_raw
+    return result
 
 
 
