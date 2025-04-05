@@ -1,7 +1,7 @@
 import open3d as o3d
 import os
-import copy
 import numpy as np
+import copy
 
 def load_and_preprocess_pcd(file_path, voxel_size=1.0):
     pcd = o3d.io.read_point_cloud(file_path)
@@ -36,6 +36,7 @@ def run_icp(source_down, target_down, source_raw, target_raw, method="point_to_p
     transformed_source.transform(result.transformation)
 
     return transformed_source, target_raw
+
 
 
 if __name__ == "__main__":
