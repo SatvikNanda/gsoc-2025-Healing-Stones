@@ -52,3 +52,19 @@
 2. Point-to-plane is better suited for cultural heritage fragments.
 3. Automating and logging results gives clear insight into matching quality.
 
+# Day 3:
+## What I did today:
+
+1. analyse_icp_results.py:<br>
+   a. Automatically sort and print top fragment pairs based on fitness.<br>
+   b. Observed that some top-scoring pairs were actually duplicates (identified by identical point counts and identity transformation matrix).<br>
+   c. Confirmed working ICP alignment for meaningful pairs.<br>
+
+2. global_assembly.py:<br>
+  a. Reads sorted_icp_results.csv<br>
+  b. Selects a base fragment (most connections in top matches).<br>
+  c. Iteratively aligns and merges fragments using point-to-plane ICP.<br>
+  d. Maintains a global assembly with cumulative transformations.<br>
+![image](https://github.com/user-attachments/assets/31358a0d-8bec-499b-a3c5-5ca0a617fc61)
+
+
