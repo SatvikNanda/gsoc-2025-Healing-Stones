@@ -65,6 +65,17 @@
   b. Selects a base fragment (most connections in top matches).<br>
   c. Iteratively aligns and merges fragments using point-to-plane ICP.<br>
   d. Maintains a global assembly with cumulative transformations.<br>
-![image](https://github.com/user-attachments/assets/31358a0d-8bec-499b-a3c5-5ca0a617fc61)
+![image](https://github.com/user-attachments/assets/ee0a775e-153a-42cc-bc0d-a869a6484270)
+
+# Day 4:
+## What I did today:
+
+### Clean_colorise_aseembly.py:
+a. Optimized point cloud.<br>
+b. Downsampled for clarity and reduced size.<br>
+c. Statistical outliers removed.<br>
+d. Added random colors across the fragments for visual inspection.<br>
+![image](https://github.com/user-attachments/assets/390b367e-050d-42f5-882a-56351cdb43df)
+
 
 
