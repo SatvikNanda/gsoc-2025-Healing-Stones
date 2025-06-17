@@ -1,24 +1,19 @@
 import open3d as o3d
 import numpy as np
-import matplotlib.pyplot as plt
+import pandas as pd
 import os
 
-def analyze_fragment_color_and_geometry(ply_path):
-    # Load the fragment
+def analyze_fragment_brightness_contrast(ply_path):
     pcd = o3d.io.read_point_cloud(ply_path)
     if not pcd.has_colors():
         raise ValueError("Point cloud has no color information.")
     if not pcd.has_normals():
         pcd.estimate_normals()
 
-    points = np.asarray(pcd.points)
     colors = np.asarray(pcd.colors)
     normals = np.asarray(pcd.normals)
+    brightness = np.mean(colors, axis=1)
 
-    # Step 1: Compute average color brightness
-    brightness = np.mean(colors, axis=1)  # mean of R, G, B per point
-
-    # Step 2: Identify the brightest face using normal directions
     directions = {
         'X+': np.array([1, 0, 0]),
         'X-': np.array([-1, 0, 0]),
@@ -31,40 +26,33 @@ def analyze_fragment_color_and_geometry(ply_path):
     face_brightness = {}
     for key, direction in directions.items():
         dot_product = np.dot(normals, direction)
-        mask = dot_product > 0.9  # nearly aligned with direction
-        if np.sum(mask) > 0:
-            avg_brightness = np.mean(brightness[mask])
-            face_brightness[key] = avg_brightness
-        else:
-            face_brightness[key] = 0
+        mask = dot_product > 0.9
+        face_brightness[key] = np.mean(brightness[mask]) if np.any(mask) else 0
 
-    # Step 3: Identify the face with maximum brightness
     likely_inner_face = max(face_brightness, key=face_brightness.get)
-
-    # Step 4: Classify based on overall outer color
     avg_rgb = np.mean(colors, axis=0)
-    classification = "Corner" if avg_rgb[1] > avg_rgb[0] else "Middle"  # greenish = yellowish
+    brightness_range = max(face_brightness.values()) - min(face_brightness.values())
 
     return {
-        "average_color": avg_rgb,
+        "average_color_R": avg_rgb[0],
+        "average_color_G": avg_rgb[1],
+        "average_color_B": avg_rgb[2],
         "likely_inner_face": likely_inner_face,
-        "classification": classification,
-        "face_brightness": face_brightness
+        "brightness_range": brightness_range,
+        **face_brightness
     }
 
-# Example usage:
-fragment_dir = "data/fragments"  # replace with your local directory path
+# 📁 CHANGE THIS TO YOUR LOCAL FRAGMENTS DIRECTORY
+fragment_dir = "data/fragments"
+
 results = {}
 for file in os.listdir(fragment_dir):
-    if file.endswith(".ply"):
+    if file.lower().endswith(".ply"):
         path = os.path.join(fragment_dir, file)
-        results[file] = analyze_fragment_color_and_geometry(path)
+        results[file] = analyze_fragment_brightness_contrast(path)
 
-import pandas as pd
-
-
-# Save the output to a CSV file instead
-df.to_csv("fragment_analysis_results.csv", index=True)
-print("Results saved to fragment_analysis_results.csv")
-
-
+# Create DataFrame and sort by brightness range ascending (flatter/middle-like pieces first)
+df = pd.DataFrame.from_dict(results, orient='index')
+df_sorted = df.sort_values(by="brightness_range", ascending=True)
+df_sorted.to_csv("fragment_color_reranked.csv", index=True)
+print("✅ Reranked fragments saved to fragment_color_reranked.csv")

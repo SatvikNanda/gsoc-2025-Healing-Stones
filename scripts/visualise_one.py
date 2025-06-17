@@ -23,7 +23,7 @@ if __name__ == "__main__":
     available_files = list_available_files(data_path)
 
     if available_files:
-        selected_file = available_files[0]  # Or manually pick a file name
+        selected_file = available_files[16]  # Or manually pick a file name
         print(f"\nLoading and visualizing: {selected_file}")
         file_path = os.path.join(data_path, selected_file)
         pcd = load_point_cloud(file_path)
