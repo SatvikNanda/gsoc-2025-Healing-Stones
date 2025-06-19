@@ -2,3 +2,6 @@ data/fragments/*
 global_assembly.ply
 global_assembly_cleaned.ply
 artifactImage
+sampleAdjPieces
+features
+normalisedData

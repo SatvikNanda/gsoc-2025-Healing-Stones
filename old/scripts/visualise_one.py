@@ -17,8 +17,8 @@ def list_available_files(folder_path):
     return files
 
 if __name__ == "__main__":
-    data_path = "data/fragments"
-
+    #data_path = "C:/Users/satvi/OneDrive/Desktop/gsoc-2025-Healing-Stones/new/normalisedData"
+    data_path = "C:/Users/satvi/OneDrive/Desktop/gsoc-2025-Healing-Stones/data/fragments"
     # List and pick one file
     available_files = list_available_files(data_path)
 
