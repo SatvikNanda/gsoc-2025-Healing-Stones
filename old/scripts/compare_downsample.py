@@ -23,7 +23,7 @@ def compare_original_vs_downsampled(original_pcd, downsampled_pcd):
 
 if __name__ == "__main__":
     data_path = "data/fragments"
-    file_name = "NAR_ST_43B_FR_01_F_01_R_02.PLY"  
+    file_name = "piece1.PLY"  
     file_path = os.path.join(data_path, file_name)
 
     # Load and downsample
