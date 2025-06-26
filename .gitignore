@@ -6,3 +6,6 @@ sampleAdjPieces
 features
 normalisedData
 shrinkwrap
+transformation_matrix.csv
+adjacent.json
+blender
