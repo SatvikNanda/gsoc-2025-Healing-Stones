@@ -1,0 +1,5 @@
+The objective of this folder is to store the manual ground truths which are obtained by manually aligning
+pieces inside blender. This folder helps us store the transformation matrix of each piece to show the 
+relative position of each piece in terms of numbers.
+
+It also helps us to know which piece is adjacent to which piece further helping our model in future.
